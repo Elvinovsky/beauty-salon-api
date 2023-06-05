@@ -9,7 +9,6 @@ const Home = () => <h1>Домашняя страница</h1>;
 const About = () => <h1>О нас</h1>;
 const Contact = () => <h1>Контакты</h1>;
 
-
 function Switch(props) {
     return null;
 }
