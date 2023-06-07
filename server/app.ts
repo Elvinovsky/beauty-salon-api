@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
 import cookieParser from "cookie-parser"
-import { FeedbacksRouter } from "../src/routers/feedbacks-router";
+import { RecordsRouter } from "../src/routers/records-router";
 import { ServicesRouter } from "../src/routers/services-router";
 
 const app = express()
