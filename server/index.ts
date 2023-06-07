@@ -1,13 +1,15 @@
-import express from "express";
+import { startServer } from "./app";
+import { runDB } from "./db/runDb";
 
-export const app = express()
-const port = 3000
+const startApp = async () => {
+        startServer()
+        await runDB()
+}
 
-app.use(express.json())
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+startApp()
+    .then (() => {
+        console.log('app started')
+    })
+    .catch((err) => {
+        console.error('error startApp',err)
 })
