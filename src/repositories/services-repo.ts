@@ -1,4 +1,5 @@
 import { ServiceModel } from "../types/service-types";
+import { ObjectId } from "mongodb";
 
 export const servicesRepo = {
     async getServices() {
@@ -28,7 +29,7 @@ export const servicesRepo = {
     },
     async deleteService(id: string) {
         try {
-            return ServiceModel.findByIdAndDelete({id: id})
+            return ServiceModel.findByIdAndDelete({ _id: new ObjectId(id) })
         } catch (error) {
             console.error(error)
             return null

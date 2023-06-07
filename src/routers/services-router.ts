@@ -6,7 +6,7 @@ import {
 import { servicesRepo } from "../repositories/services-repo";
 import { checkForErrors } from "../midllewares/express-validator/check-errors";
 import { servicesValidation } from "../midllewares/express-validator/services-body-validation";
-import { accessSync } from "fs";
+
 export const ServicesRouter = Router()
 
 ServicesRouter.get('/service', async (req:Request, res:Response) => {
@@ -33,7 +33,7 @@ ServicesRouter.post('/service',servicesValidation, checkForErrors, async (req:Re
     }
 })
 
-ServicesRouter.delete('service/:id', async (req:Request, res:Response) => {
+ServicesRouter.delete('/service/:id', async (req:Request, res:Response) => {
 
     const result = await servicesRepo.deleteService(req.params.id)
 
