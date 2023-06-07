@@ -13,7 +13,8 @@ app.get('/', ( req:Request, res:Response) => {
     const ipAddress = req.ip
     res.send({ipAddress})
 })
-app.use('/sugar', ServicesRouter)
+app.use('/service', ServicesRouter)
+app.use('/record', RecordsRouter)
 
 const startServer = () => {
     const port = process.env.PORT || 3000

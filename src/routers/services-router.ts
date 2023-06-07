@@ -9,8 +9,8 @@ import { servicesValidation } from "../midllewares/express-validator/services-bo
 
 export const ServicesRouter = Router()
 
-ServicesRouter.get('/service', async (req:Request, res:Response) => {
-    const allServices = await servicesRepo.getServices()
+ServicesRouter.get('/', async (req:Request, res:Response) => {
+    const allServices = await servicesRepo.getAllServices()
 
     if(allServices) {
         res.send(allServices)
@@ -18,22 +18,24 @@ ServicesRouter.get('/service', async (req:Request, res:Response) => {
     }
 
     res.sendStatus(500)
-    return
+        return
 })
 
-ServicesRouter.post('/service',servicesValidation, checkForErrors, async (req:Request, res:Response) => {
-    try {
-        const newService = await servicesRepo.addService(req.body.title, req.body.price)
+ServicesRouter.post('/',servicesValidation, checkForErrors, async (req:Request, res:Response) => {// todo superAdminGuard
+
+    const newService = await servicesRepo.addService(req.body.title, req.body.price)
+
+    if(newService) {
         res.status(201).send(newService)
         return
-    } catch (error) {
-        console.log('что то пошло не так', error)
-        res.sendStatus(500)
-        return
     }
+
+    res.sendStatus(500)
+        return
+
 })
 
-ServicesRouter.delete('/service/:id', async (req:Request, res:Response) => {
+ServicesRouter.delete('/:id', async (req:Request, res:Response) => {
 
     const result = await servicesRepo.deleteService(req.params.id)
 
@@ -43,5 +45,5 @@ ServicesRouter.delete('/service/:id', async (req:Request, res:Response) => {
     }
 
     res.sendStatus(500)
-    return
-})
+        return
+}) // todo superAdminGuard

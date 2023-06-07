@@ -2,9 +2,9 @@ import { ServiceModel } from "../types/service-types";
 import { ObjectId } from "mongodb";
 
 export const servicesRepo = {
-    async getServices() {
+    async getAllServices() {
        try {
-            return ServiceModel.find({});
+           return ServiceModel.find({});
         } catch (error) {
            console.error(error)
            return null
