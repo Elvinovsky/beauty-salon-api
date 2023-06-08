@@ -1,5 +1,4 @@
 import { RecordModel } from "../types/record-types";
-import { ServiceModel } from "../types/service-types";
 
 export const recordsRepo = {
     async  getAllRecords() {
@@ -11,28 +10,31 @@ export const recordsRepo = {
         }
     },
 
-    async addRecord(titleService: string,
-                    name: string,
+    async addRecord(serviceTitle: string,
+                    dateMeeting: Date,
+                    userName: string,
                     phoneNumber: number,
-                    instagram: string | null | undefined,
+                    instagram?: string
     ) {
         try {
-            const isRepeatSession = false // bigness
-            const coupon = 10 // bigness
             const addedAt = new Date()
-            const price = 100 //logic
-           const  dateMeeting = new Date()
-            //todo думай
 
             const newRecord = new RecordModel({
-                titleService, price, name, phoneNumber, instagram, isRepeatSession, coupon, dateMeeting, addedAt})
+                serviceTitle,
+                dateMeeting,
+                addedAt,
+                userName,
+                phoneNumber,
+                instagram})
+
             if(!newRecord){
                 return null
             }
+
             await newRecord.save()
             return newRecord
         } catch (error) {
-            console.log('услуга не добавлена', error)
+            console.log('запись не добавлена', error)
             return error
         }
     },

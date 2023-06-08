@@ -1,6 +1,4 @@
-import mongoose, {
-    Schema
-} from "mongoose";
+import mongoose from "mongoose";
 
 
 export type ServiceDBType = {
@@ -9,7 +7,7 @@ export type ServiceDBType = {
 }
 
 const serviceSchema: mongoose.Schema<ServiceDBType> = new mongoose.Schema<ServiceDBType>({
-    title: {type: String, required: true, unique: true},
+    title: {type: String, required: true},
     price: {type: Number, required: true}
 })
 

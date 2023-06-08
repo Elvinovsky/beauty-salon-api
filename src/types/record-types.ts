@@ -1,33 +1,22 @@
-import { UserDBType } from "./user-types";
 import mongoose, { Schema } from "mongoose";
-import { ServiceDBType } from "./service-types";
+
 
 export type RecordDBTypes = {
-    serviceData: ServiceDBType
-    userData: {
-        name: string
-        phoneNumber: number
-        instagram: string | null | undefined
-        isRepeatSession: boolean | undefined
-        coupon: number | null | undefined
-    }
+    serviceTitle: string
+    userName: string
+    phoneNumber: number
     dateMeeting: Date
-    addedAt: Date// todo isconfirmed заказ выполнен прописать логику
+    addedAt: Date // todo isconfirmed заказ выполнен прописать логику
+    instagram?: string
 }
 const recordSchema: Schema<RecordDBTypes> = new mongoose.Schema<RecordDBTypes>({
-    serviceData: {
-        title: {type: String, required: true, unique: true},
-        price: {type: Number, required: true}
-    },
-    userData: {
-        name: {type: String, required: true},
-        phoneNumber: {type: Number, required: true},
-        instagram: { type: String, default: null },
-        isRepeatSession: {type: Boolean, required: true, default: false},
-        coupon: {type: Number, default: null}
-    },
+    serviceTitle: {type: String},
     dateMeeting: {type: Date, required: true },
-    addedAt: Date}
-)
+    addedAt: {type: Date, required: true },
+    userName: {type: String, required: true},
+    phoneNumber: {type: Number, required: true},
+    instagram: { type: String, default: null },
+
+})
 
 export const RecordModel = mongoose.model('records', recordSchema)
