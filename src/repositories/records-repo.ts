@@ -10,12 +10,20 @@ export const recordsRepo = {
         }
     },
 
+    async  getRecordsByPhone(phoneNumber: string) {
+        try {
+            return  await RecordModel.find({phoneNumber})
+        } catch (error) {
+            console.error(error)
+            return null
+        }
+    },
+
     async addRecord(serviceTitle: string,
                     dateMeeting: Date,
                     userName: string,
                     phoneNumber: number,
-                    instagram?: string
-    ) {
+                    instagram?: string ) {
         try {
             const addedAt = new Date()
 
@@ -38,4 +46,20 @@ export const recordsRepo = {
             return error
         }
     },
+
+    async updateRecord(phoneNumber: number,
+                       serviceTitle?: string,
+                       dateMeeting?: Date,
+                       userName?: string,
+                       instagram?: string ) {
+        try {
+        const addedAt = new Date()
+
+        const changeRecord = await RecordModel.updateOne({phoneNumber: phoneNumber}, {$set: {serviceTitle, dateMeeting, userName, instagram, addedAt }})
+            return changeRecord.matchedCount === 1
+    } catch (error) {
+            console.log('запись не обновлена', error)
+            return null
+        }
+    }
 }

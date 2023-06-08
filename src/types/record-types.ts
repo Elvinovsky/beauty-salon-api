@@ -10,7 +10,7 @@ export type RecordDBTypes = {
     instagram?: string
 }
 const recordSchema: Schema<RecordDBTypes> = new mongoose.Schema<RecordDBTypes>({
-    serviceTitle: {type: String},
+    serviceTitle: {type: String, required: true},
     dateMeeting: {type: Date, required: true },
     addedAt: {type: Date, required: true },
     userName: {type: String, required: true},
