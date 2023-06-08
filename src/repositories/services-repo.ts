@@ -17,9 +17,7 @@ export const servicesRepo = {
     async addService(title: string, price: number) {
         try {
             const newService = new ServiceModel({ title, price })
-            if(!newService){
-                return null
-            }
+
             await newService.save()
                 return newService
         } catch (error) {

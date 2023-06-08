@@ -5,10 +5,12 @@ import {
 } from "express";
 import { recordsRepo } from "../repositories/records-repo";
 import {
+    deleteRecordValidation,
     postRecordsValidation,
     putRecordsValidation
 } from "../midllewares/express-validator/records-body-validation";
 import { checkForErrors } from "../midllewares/express-validator/check-errors";
+
 
 export const RecordsRouter = Router()
 
@@ -50,14 +52,16 @@ RecordsRouter.put('/:phoneNumber',
             req.body?.userName,
             req.body?.instagram)
 
+        if (changeRecord === null) {
+            res.sendStatus(500)
+            return
+        }
         if (changeRecord) {
             res.sendStatus(204)
             return
         }
-
-        res.sendStatus(500)
+        res.sendStatus(404)// todo перед отправкой смс должна пройти валидация на существование номера в БД
         return
-
     })// запись на прием
 RecordsRouter.post('/',
     postRecordsValidation,
@@ -70,14 +74,36 @@ RecordsRouter.post('/',
             req.body?.instagram)
 
         if (newRecord) {
-            res.status(201).send(newRecord)
+            res.status(201)
+               .send(newRecord)
             return
         }
+
 
         res.sendStatus(500)
         return
 
-    })//изменение времени приема или области депиляции
+    }) //изменение времени приема или области депиляции
 RecordsRouter.put('/callback')// обратный звонок
-RecordsRouter.delete('/record')// отмена записи на прием
+RecordsRouter.delete('/:phoneNumber',
+    deleteRecordValidation,
+    checkForErrors,
+    async( req: Request, res: Response ) => {
+
+        const isDeletedRecords = await recordsRepo.deleteRecord(Number(req.params.phoneNumber),
+            req.body.dateMeeting)
+        if (isDeletedRecords === null) {
+            res.sendStatus(500)
+            return
+        }
+
+        if (isDeletedRecords) {
+            res.sendStatus(204)
+            return
+        }
+        res.sendStatus(404)
+        return
+
+
+    })// отмена записи на прием
 
