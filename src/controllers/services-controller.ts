@@ -26,17 +26,22 @@ export class ServicesController {
 
     async createService ( req: Request, res: Response ) {// todo superAdminGuard
 
-        const newService = await this.serviceRepo.addService(req.body.title,
-            req.body.price)
+       try {
+            const newService = await this.serviceRepo.addService(req.body.title,
+                req.body.price)
 
-        if (newService) {
-            res.status(201)
-               .send(newService)
+            if (newService) {
+                res.status(201)
+                   .send(newService)
+                return
+            }
+
+            res.sendStatus(500)
             return
-        }
-
-        res.sendStatus(500)
-        return
+        } catch (error) {
+           console.log(error)
+           res.sendStatus(500)
+       }
     }
 
     async deleteService ( req: Request, res: Response ) {

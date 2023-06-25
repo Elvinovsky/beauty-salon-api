@@ -1,4 +1,7 @@
-import { ServiceModel } from "../types/service-types";
+import {
+    ServiceDBType,
+    ServiceModel
+} from "../types/service-types";
 import { ObjectId } from "mongodb";
 import { injectable } from "inversify";
 
@@ -16,7 +19,7 @@ export class ServicesRepo {
     async getServiceByTitle(title: string) {
         return ServiceModel.findOne({title});
     }
-    async addService(title: string, price: number) {
+    async addService(title: string, price: number):Promise<ServiceDBType | null> {
         try {
             const newService = new ServiceModel({ title, price })
 
@@ -24,7 +27,7 @@ export class ServicesRepo {
                 return newService
         } catch (error) {
             console.log('услуга не добавлена', error)
-            return error
+            return null
         }
     }
     async deleteService(id: string) {

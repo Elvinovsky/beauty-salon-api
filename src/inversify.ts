@@ -1,9 +1,9 @@
 import "reflect-metadata"
-import { Container } from "inversify";
 import { RecordsController } from "./controllers/records-controller";
 import { RecordsRepo } from "./repositories/records-repo";
 import { ServicesRepo } from "./repositories/services-repo";
 import { ServicesController } from "./controllers/services-controller";
+import { Container } from "inversify";
 
 export const container = new Container()
 

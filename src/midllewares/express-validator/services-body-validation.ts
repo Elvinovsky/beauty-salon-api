@@ -1,5 +1,6 @@
 import { body } from "express-validator";
 import { ServicesRepo } from "../../repositories/services-repo";
+import { container } from "../../inversify";
 
 export const servicesValidation = [
     body('title')
@@ -10,7 +11,7 @@ export const servicesValidation = [
         .isString()
         .withMessage("это не строка")
         .custom(async (title: string) => {
-        const validationTitle = await ServicesRepo.getServiceByTitle(title)
+        const validationTitle = await container.get(ServicesRepo).getServiceByTitle(title)
         if (validationTitle) {
             throw new Error("Название услуги не должно повторятся");
         }
