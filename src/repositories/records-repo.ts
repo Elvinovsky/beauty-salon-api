@@ -2,8 +2,10 @@ import {
     RecordDBTypes,
     RecordModel
 } from "../types/record-types";
+import { injectable } from "inversify";
 
-export const recordsRepo = {
+@injectable()
+export class RecordsRepo {
     async getAllRecords () {
         try {
             return await RecordModel.find({})
@@ -11,7 +13,7 @@ export const recordsRepo = {
             console.error(error)
             return null
         }
-    },
+    }
 
     async getRecordsByPhone ( phoneNumber: string ) {
         try {
@@ -20,7 +22,7 @@ export const recordsRepo = {
             console.error(error)
             return null
         }
-    },
+    }
 
     async addRecord ( serviceTitle: string, dateMeeting: Date, userName: string, phoneNumber: number, instagram?: string ): Promise<RecordDBTypes | null> {
         try {
@@ -42,7 +44,7 @@ export const recordsRepo = {
                 error)
             return null
         }
-    },
+    }
 
     async updateRecord ( phoneNumber: number, serviceTitle?: string, dateMeeting?: Date, userName?: string, instagram?: string ) {
         try {
@@ -64,18 +66,20 @@ export const recordsRepo = {
                 error)
             return null
         }
-    },
+    }
+
     async deleteRecord ( phoneNumber: number, dateMeeting: Date ) {
-       try {
+        try {
             const result = await RecordModel.deleteOne({
                 phoneNumber,
                 dateMeeting
             })
             return result.deletedCount === 1
         } catch (error) {
-           console.log('не получилось удалить запись', error)
-           return null
-       }
+            console.log('не получилось удалить запись',
+                error)
+            return null
+        }
 
     }
 }
