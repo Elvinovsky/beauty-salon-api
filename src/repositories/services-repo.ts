@@ -1,7 +1,9 @@
 import { ServiceModel } from "../types/service-types";
 import { ObjectId } from "mongodb";
+import { injectable } from "inversify";
 
-export const servicesRepo = {
+@injectable()
+export class ServicesRepo {
     async getAllServices() {
        try {
            return ServiceModel.find({});
@@ -10,10 +12,10 @@ export const servicesRepo = {
            return null
        }
 
-    },
+    }
     async getServiceByTitle(title: string) {
         return ServiceModel.findOne({title});
-    },
+    }
     async addService(title: string, price: number) {
         try {
             const newService = new ServiceModel({ title, price })
@@ -24,7 +26,7 @@ export const servicesRepo = {
             console.log('услуга не добавлена', error)
             return error
         }
-    },
+    }
     async deleteService(id: string) {
         try {
             return ServiceModel.findByIdAndDelete({ _id: new ObjectId(id) })
@@ -33,6 +35,6 @@ export const servicesRepo = {
             return null
         }
 
-    },
+    }
 
 }

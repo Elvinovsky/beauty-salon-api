@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { servicesRepo } from "../../repositories/services-repo";
+import { ServicesRepo } from "../../repositories/services-repo";
 
 export const servicesValidation = [
     body('title')
@@ -10,7 +10,7 @@ export const servicesValidation = [
         .isString()
         .withMessage("это не строка")
         .custom(async (title: string) => {
-        const validationTitle = await servicesRepo.getServiceByTitle(title)
+        const validationTitle = await ServicesRepo.getServiceByTitle(title)
         if (validationTitle) {
             throw new Error("Название услуги не должно повторятся");
         }
