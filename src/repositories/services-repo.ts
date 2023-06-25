@@ -7,30 +7,37 @@ import { injectable } from "inversify";
 
 @injectable()
 export class ServicesRepo {
-    async getAllServices() {
-       try {
-           return ServiceModel.find({});
+    async getAllServices () {
+        try {
+            return ServiceModel.find({});
         } catch (error) {
-           console.error(error)
-           return null
-       }
+            console.error(error)
+            return null
+        }
 
     }
-    async getServiceByTitle(title: string) {
-        return ServiceModel.findOne({title});
+
+    async getServiceByTitle ( title: string ) {
+        return ServiceModel.findOne({ title });
     }
-    async addService(title: string, price: number):Promise<ServiceDBType | null> {
+
+    async addService ( title: string, price: number ): Promise<ServiceDBType | null> {
         try {
-            const newService = new ServiceModel({ title, price })
+            const newService = new ServiceModel({
+                title,
+                price
+            })
 
             await newService.save()
-                return newService
+            return newService
         } catch (error) {
-            console.log('услуга не добавлена', error)
+            console.log('услуга не добавлена',
+                error)
             return null
         }
     }
-    async deleteService(id: string) {
+
+    async deleteService ( id: string ) {
         try {
             return ServiceModel.findByIdAndDelete({ _id: new ObjectId(id) })
         } catch (error) {
