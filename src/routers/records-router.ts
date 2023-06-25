@@ -25,7 +25,6 @@ RecordsRouter.get('/',
 
         res.sendStatus(500)
         return
-
     })
 
 RecordsRouter.get('/:phoneNumber',
