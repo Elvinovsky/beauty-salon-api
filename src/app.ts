@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 import cookieParser from "cookie-parser"
-import { RecordsRouter } from "../src/routers/records-router";
-import { ServicesRouter } from "../src/routers/services-router";
+import { RecordsRouter } from "./routers/records-router";
+import { ServicesRouter } from "./routers/services-router";
 
 const app = express()
 
