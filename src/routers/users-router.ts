@@ -6,7 +6,8 @@ import {
 
 
 export const UsersRouter = Router()
-UsersRouter.get('/allUsers', async (req:Request, res:Response) => {
+UsersRouter.get('/allUsers',
+    async( req: Request, res: Response ) => {
 
 
-})
+    })
