@@ -13,15 +13,14 @@ export const checkForErrors = (( req: Request, res: Response, next: NextFunction
     const errorFormatter = ( {
                                  msg,
                                  path,
-                             }:FieldValidationError ) => {
+                             }: FieldValidationError ) => {
         return {
             message: msg,
             field: path
         };
     };
 
-
-
+// todo ts-ignore
     const error: Result<{ field: string; message: any }> = validationResult(req)
         // @ts-ignore
         .formatWith(errorFormatter);
