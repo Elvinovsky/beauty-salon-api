@@ -7,22 +7,25 @@ import {
     Result,
     validationResult
 } from 'express-validator';
-import { FieldValidationError } from "express-validator/src/base";
+import {
+    ErrorMessage,
+    ValidationError
+} from "express-validator/src/base";
 
 export const checkForErrors = (( req: Request, res: Response, next: NextFunction ) => {
     const errorFormatter = ( {
                                  msg,
-                                 path,
-                             }: FieldValidationError ) => {
+                                 type,
+                             }: ValidationError ): ErrorMessage => {
+
         return {
             message: msg,
-            field: path
+            field: type
         };
     };
 
-// todo ts-ignore
-    const error: Result<{ field: string; message: any }> = validationResult(req)
-        // @ts-ignore
+
+    const error: Result<ErrorMessage> = validationResult(req)
         .formatWith(errorFormatter);
     if (!error.isEmpty()) {
         return res.status(400)
